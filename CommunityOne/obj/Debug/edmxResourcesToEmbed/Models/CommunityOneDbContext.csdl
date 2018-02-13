@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CommunityOneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblDepartment">
+    <Key>
+      <PropertyRef Name="DepID" />
+    </Key>
+    <Property Name="DepID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DepCode" Type="Int32" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="tblUsrDetail">
+    <Key>
+      <PropertyRef Name="UsrDetailsID" />
+    </Key>
+    <Property Name="UsrDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsrInfoID" Type="Int32" Nullable="false" />
+    <Property Name="UsrFName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsrLName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsrMName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UsrDepartment" Type="Int32" Nullable="false" />
+    <Property Name="UsrPosition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UsrEmpCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UsrAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="UsrSection" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="UsrEAdd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UsrGender" Type="Boolean" />
+    <Property Name="UsrDateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="UsrContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Usrhoobies" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="UsrMotto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="UsrProfileID" Type="Int64" />
+    <Property Name="UsrNickName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tblUsrInfo" Relationship="Self.FK_UsrDetails_PK_UsrInfo" FromRole="tblUsrDetails" ToRole="tblUsrInfo" />
+  </EntityType>
+  <EntityType Name="tblUsrInfo">
+    <Key>
+      <PropertyRef Name="UsrInfoID" />
+    </Key>
+    <Property Name="UsrInfoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsrName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsrPass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsrIsLog" Type="Boolean" Nullable="false" />
+    <Property Name="UsrStatus" Type="Boolean" Nullable="false" />
+    <Property Name="UsrLastLog" Type="DateTime" Precision="0" />
+    <Property Name="UsrLoginAttempt" Type="Byte" Nullable="false" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="UsrGroupID" Type="Int32" />
+    <Property Name="UsrModuleAccess" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="isActive" Type="Boolean" />
+    <Property Name="photoLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tblUsrDetails" Relationship="Self.FK_UsrDetails_PK_UsrInfo" FromRole="tblUsrInfo" ToRole="tblUsrDetails" />
+  </EntityType>
+  <Association Name="FK_UsrDetails_PK_UsrInfo">
+    <End Role="tblUsrInfo" Type="Self.tblUsrInfo" Multiplicity="1" />
+    <End Role="tblUsrDetails" Type="Self.tblUsrDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUsrInfo">
+        <PropertyRef Name="UsrInfoID" />
+      </Principal>
+      <Dependent Role="tblUsrDetails">
+        <PropertyRef Name="UsrInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CommunityOneEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblDepartments" EntityType="Self.tblDepartment" />
+    <EntitySet Name="tblUsrDetails" EntityType="Self.tblUsrDetail" />
+    <EntitySet Name="tblUsrInfoes" EntityType="Self.tblUsrInfo" />
+    <AssociationSet Name="FK_UsrDetails_PK_UsrInfo" Association="Self.FK_UsrDetails_PK_UsrInfo">
+      <End Role="tblUsrInfo" EntitySet="tblUsrInfoes" />
+      <End Role="tblUsrDetails" EntitySet="tblUsrDetails" />
+    </AssociationSet>
+    <FunctionImport Name="proc_getUserLoginCredentials" ReturnType="Collection(CommunityOneModel.proc_getUserLoginCredentials_Result)">
+      <Parameter Name="uname" Mode="In" Type="String" />
+      <Parameter Name="upass" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="vw_POHeaderShort" EntityType="CommunityOneModel.vw_POHeaderShort" />
+  </EntityContainer>
+  <ComplexType Name="proc_getUserLoginCredentials_Result">
+    <Property Type="String" Name="UsrName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="UsrPass" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="UsrIsLog" Nullable="false" />
+    <Property Type="Boolean" Name="UsrStatus" Nullable="false" />
+    <Property Type="Int32" Name="UsrGroupId" Nullable="true" />
+    <Property Type="Boolean" Name="isActive" Nullable="true" />
+    <Property Type="String" Name="UsrFName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="UsrLName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="UsrMName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="UsrEmpCode" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="UsrAddress" Nullable="true" MaxLength="100" />
+    <Property Type="Int64" Name="UsrProfileId" Nullable="true" />
+    <Property Type="String" Name="photoLocation" Nullable="true" />
+    <Property Type="Guid" Name="RndID" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="vw_POHeaderShort">
+    <Key>
+      <PropertyRef Name="PO_No" />
+      <PropertyRef Name="PO_Stat" />
+      <PropertyRef Name="PO_Status_Des" />
+      <PropertyRef Name="PO_Vendor_No" />
+      <PropertyRef Name="PO_Cost" />
+      <PropertyRef Name="PO_SKU_Level_Allowance" />
+      <PropertyRef Name="PO_Vendor_Level_Allowance" />
+      <PropertyRef Name="PO_Buyer_Init" />
+    </Key>
+    <Property Name="PO_No" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+    <Property Name="PO_Stat" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PO_Status_Des" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
+    <Property Name="PO_Vendor_No" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+    <Property Name="PO_Vendor_Name" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+    <Property Name="PO_Entry_Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PO_Cost" Type="Decimal" Nullable="false" Precision="17" Scale="4" />
+    <Property Name="PO_SKU_Level_Allowance" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+    <Property Name="PO_Vendor_Level_Allowance" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+    <Property Name="PO_Buyer_Init" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="PO_Buyer_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

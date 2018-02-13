@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CommunityOneModelStoreContainer" CdmEntityContainer="CommunityOneEntities">
+    <EntitySetMapping Name="tblDepartments">
+      <EntityTypeMapping TypeName="CommunityOneModel.tblDepartment">
+        <MappingFragment StoreEntitySet="tblDepartment">
+          <ScalarProperty Name="DepID" ColumnName="DepID" />
+          <ScalarProperty Name="DepName" ColumnName="DepName" />
+          <ScalarProperty Name="DepCode" ColumnName="DepCode" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblUsrDetails">
+      <EntityTypeMapping TypeName="CommunityOneModel.tblUsrDetail">
+        <MappingFragment StoreEntitySet="tblUsrDetails">
+          <ScalarProperty Name="UsrDetailsID" ColumnName="UsrDetailsID" />
+          <ScalarProperty Name="UsrInfoID" ColumnName="UsrInfoID" />
+          <ScalarProperty Name="UsrFName" ColumnName="UsrFName" />
+          <ScalarProperty Name="UsrLName" ColumnName="UsrLName" />
+          <ScalarProperty Name="UsrMName" ColumnName="UsrMName" />
+          <ScalarProperty Name="UsrDepartment" ColumnName="UsrDepartment" />
+          <ScalarProperty Name="UsrPosition" ColumnName="UsrPosition" />
+          <ScalarProperty Name="UsrEmpCode" ColumnName="UsrEmpCode" />
+          <ScalarProperty Name="UsrAddress" ColumnName="UsrAddress" />
+          <ScalarProperty Name="UsrSection" ColumnName="UsrSection" />
+          <ScalarProperty Name="UsrEAdd" ColumnName="UsrEAdd" />
+          <ScalarProperty Name="UsrGender" ColumnName="UsrGender" />
+          <ScalarProperty Name="UsrDateOfBirth" ColumnName="UsrDateOfBirth" />
+          <ScalarProperty Name="UsrContactNo" ColumnName="UsrContactNo" />
+          <ScalarProperty Name="Usrhoobies" ColumnName="Usrhoobies" />
+          <ScalarProperty Name="UsrMotto" ColumnName="UsrMotto" />
+          <ScalarProperty Name="UsrProfileID" ColumnName="UsrProfileID" />
+          <ScalarProperty Name="UsrNickName" ColumnName="UsrNickName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblUsrInfoes">
+      <EntityTypeMapping TypeName="CommunityOneModel.tblUsrInfo">
+        <MappingFragment StoreEntitySet="tblUsrInfo">
+          <ScalarProperty Name="UsrInfoID" ColumnName="UsrInfoID" />
+          <ScalarProperty Name="UsrName" ColumnName="UsrName" />
+          <ScalarProperty Name="UsrPass" ColumnName="UsrPass" />
+          <ScalarProperty Name="UsrIsLog" ColumnName="UsrIsLog" />
+          <ScalarProperty Name="UsrStatus" ColumnName="UsrStatus" />
+          <ScalarProperty Name="UsrLastLog" ColumnName="UsrLastLog" />
+          <ScalarProperty Name="UsrLoginAttempt" ColumnName="UsrLoginAttempt" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UsrGroupID" ColumnName="UsrGroupID" />
+          <ScalarProperty Name="UsrModuleAccess" ColumnName="UsrModuleAccess" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="photoLocation" ColumnName="photoLocation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="proc_getUserLoginCredentials" FunctionName="CommunityOneModel.Store.proc_getUserLoginCredentials">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CommunityOneModel.proc_getUserLoginCredentials_Result">
+          <ScalarProperty Name="UsrName" ColumnName="UsrName" />
+          <ScalarProperty Name="UsrPass" ColumnName="UsrPass" />
+          <ScalarProperty Name="UsrIsLog" ColumnName="UsrIsLog" />
+          <ScalarProperty Name="UsrStatus" ColumnName="UsrStatus" />
+          <ScalarProperty Name="UsrGroupId" ColumnName="UsrGroupId" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="UsrFName" ColumnName="UsrFName" />
+          <ScalarProperty Name="UsrLName" ColumnName="UsrLName" />
+          <ScalarProperty Name="UsrMName" ColumnName="UsrMName" />
+          <ScalarProperty Name="UsrEmpCode" ColumnName="UsrEmpCode" />
+          <ScalarProperty Name="UsrAddress" ColumnName="UsrAddress" />
+          <ScalarProperty Name="UsrProfileId" ColumnName="UsrProfileId" />
+          <ScalarProperty Name="photoLocation" ColumnName="photoLocation" />
+          <ScalarProperty Name="RndID" ColumnName="RndID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="vw_POHeaderShort">
+      <EntityTypeMapping TypeName="CommunityOneModel.vw_POHeaderShort">
+        <MappingFragment StoreEntitySet="vw_POHeaderShort">
+          <ScalarProperty Name="PO_Buyer_Name" ColumnName="PO_Buyer_Name" />
+          <ScalarProperty Name="PO_Buyer_Init" ColumnName="PO_Buyer_Init" />
+          <ScalarProperty Name="PO_Vendor_Level_Allowance" ColumnName="PO_Vendor_Level_Allowance" />
+          <ScalarProperty Name="PO_SKU_Level_Allowance" ColumnName="PO_SKU_Level_Allowance" />
+          <ScalarProperty Name="PO_Cost" ColumnName="PO_Cost" />
+          <ScalarProperty Name="PO_Entry_Date" ColumnName="PO_Entry_Date" />
+          <ScalarProperty Name="PO_Vendor_Name" ColumnName="PO_Vendor_Name" />
+          <ScalarProperty Name="PO_Vendor_No" ColumnName="PO_Vendor_No" />
+          <ScalarProperty Name="PO_Status_Des" ColumnName="PO_Status_Des" />
+          <ScalarProperty Name="PO_Stat" ColumnName="PO_Stat" />
+          <ScalarProperty Name="PO_No" ColumnName="PO_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

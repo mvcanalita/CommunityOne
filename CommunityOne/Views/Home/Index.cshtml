@@ -1,0 +1,78 @@
+﻿@using System.Web.Optimization
+@model IEnumerable<CommunityOne.Models.POHDRshrt_ViewModel >
+@{
+    ViewBag.Title = "Index";
+    ViewBag.Description = "Home Page";
+}
+
+    
+<div class="col-md-12">
+
+    <div class="panel">
+        <div class="panel-body">
+            <table id="tblPO" class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>PO Number</th>
+                        <th>Po Status</th>
+                        <th>Vendor</th>
+                        <th>PO Entry Date</th>
+                        <th>PO Cost</th>
+                        <th>SKU Lvl Alw</th>
+                        <th>Vendr Lvl Alw</th>
+                        <th>Buyer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var m in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(x => m.ponumb)</td>
+                            <td>@Html.DisplayFor(x => m.postat)</td>
+                            <td>@Html.DisplayFor(x => m.vendor)</td>
+                            <td>@Html.DisplayFor(x => m.poedat)</td>
+                            <td>@Html.DisplayFor(x => m.pocost)</td>
+                            <td>@Html.DisplayFor(x => m.pomalw)</td>
+                            <td>@Html.DisplayFor(x => m.povalw)</td>
+                            <td>@Html.DisplayFor(x => m.buyer)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        getPoList();
+    });
+
+    var getPoList = function () {
+        $.ajax({
+            type: 'GET',
+            url: 'loadPoHeader',
+            dataType: 'json',
+            success: function (data) {
+                dtBind(data);
+            }
+        });
+    }
+
+    var dtBind = function (data) {
+        $("#tblPO").DataTable({
+            "data": data,
+            "columns": [
+                { "data": "ponumb" },
+                { "data": "postat" },
+                { "data": "vendor" },
+                { "data": "vendor","sType":"datetime" },
+                { "data": "pocost" },
+                { "data": "pomalw" },
+                { "data": "povalw" },
+                { "data": "buyer" }
+            ],
+            "bServerSide":true
+        });
+    }
+</script>

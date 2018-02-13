@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CommunityOneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblDepartment">
+    <Key>
+      <PropertyRef Name="DepID" />
+    </Key>
+    <Property Name="DepID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepName" Type="varchar(max)" Nullable="false" />
+    <Property Name="DepCode" Type="int" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="date" />
+  </EntityType>
+  <EntityType Name="tblUsrDetails">
+    <Key>
+      <PropertyRef Name="UsrDetailsID" />
+    </Key>
+    <Property Name="UsrDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsrInfoID" Type="int" Nullable="false" />
+    <Property Name="UsrFName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UsrLName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UsrMName" Type="varchar" MaxLength="50" />
+    <Property Name="UsrDepartment" Type="int" Nullable="false" />
+    <Property Name="UsrPosition" Type="varchar" MaxLength="50" />
+    <Property Name="UsrEmpCode" Type="varchar" MaxLength="10" />
+    <Property Name="UsrAddress" Type="varchar" MaxLength="100" />
+    <Property Name="UsrSection" Type="varchar" MaxLength="100" />
+    <Property Name="UsrEAdd" Type="varchar" MaxLength="50" />
+    <Property Name="UsrGender" Type="bit" />
+    <Property Name="UsrDateOfBirth" Type="date" />
+    <Property Name="UsrContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="Usrhoobies" Type="varchar(max)" />
+    <Property Name="UsrMotto" Type="varchar(max)" />
+    <Property Name="UsrProfileID" Type="bigint" />
+    <Property Name="UsrNickName" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="tblUsrInfo">
+    <Key>
+      <PropertyRef Name="UsrInfoID" />
+    </Key>
+    <Property Name="UsrInfoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsrName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UsrPass" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UsrIsLog" Type="bit" Nullable="false" />
+    <Property Name="UsrStatus" Type="bit" Nullable="false" />
+    <Property Name="UsrLastLog" Type="date" />
+    <Property Name="UsrLoginAttempt" Type="tinyint" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedDate" Type="date" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="UsrGroupID" Type="int" />
+    <Property Name="UsrModuleAccess" Type="varchar(max)" />
+    <Property Name="isActive" Type="bit" />
+    <Property Name="photoLocation" Type="varchar(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'CommunityOne.dbo.vw_POHeaderShort' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_POHeaderShort">
+    <Key>
+      <PropertyRef Name="PO_No" />
+      <PropertyRef Name="PO_Stat" />
+      <PropertyRef Name="PO_Status_Des" />
+      <PropertyRef Name="PO_Vendor_No" />
+      <PropertyRef Name="PO_Cost" />
+      <PropertyRef Name="PO_SKU_Level_Allowance" />
+      <PropertyRef Name="PO_Vendor_Level_Allowance" />
+      <PropertyRef Name="PO_Buyer_Init" />
+    </Key>
+    <Property Name="PO_No" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="PO_Stat" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="PO_Status_Des" Type="varchar" MaxLength="29" Nullable="false" />
+    <Property Name="PO_Vendor_No" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+    <Property Name="PO_Vendor_Name" Type="varchar" MaxLength="35" />
+    <Property Name="PO_Entry_Date" Type="varchar" MaxLength="10" />
+    <Property Name="PO_Cost" Type="decimal" Precision="17" Scale="4" Nullable="false" />
+    <Property Name="PO_SKU_Level_Allowance" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="PO_Vendor_Level_Allowance" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="PO_Buyer_Init" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="PO_Buyer_Name" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK_UsrDetails_PK_UsrInfo">
+    <End Role="tblUsrInfo" Type="Self.tblUsrInfo" Multiplicity="1" />
+    <End Role="tblUsrDetails" Type="Self.tblUsrDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUsrInfo">
+        <PropertyRef Name="UsrInfoID" />
+      </Principal>
+      <Dependent Role="tblUsrDetails">
+        <PropertyRef Name="UsrInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="proc_getUserLoginCredentials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="uname" Type="varchar" Mode="In" />
+    <Parameter Name="upass" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="CommunityOneModelStoreContainer">
+    <EntitySet Name="tblDepartment" EntityType="Self.tblDepartment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUsrDetails" EntityType="Self.tblUsrDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUsrInfo" EntityType="Self.tblUsrInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vw_POHeaderShort" EntityType="Self.vw_POHeaderShort" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_POHeaderShort].[PO_No] AS [PO_No], 
+    [vw_POHeaderShort].[PO_Stat] AS [PO_Stat], 
+    [vw_POHeaderShort].[PO_Status_Des] AS [PO_Status_Des], 
+    [vw_POHeaderShort].[PO_Vendor_No] AS [PO_Vendor_No], 
+    [vw_POHeaderShort].[PO_Vendor_Name] AS [PO_Vendor_Name], 
+    [vw_POHeaderShort].[PO_Entry_Date] AS [PO_Entry_Date], 
+    [vw_POHeaderShort].[PO_Cost] AS [PO_Cost], 
+    [vw_POHeaderShort].[PO_SKU_Level_Allowance] AS [PO_SKU_Level_Allowance], 
+    [vw_POHeaderShort].[PO_Vendor_Level_Allowance] AS [PO_Vendor_Level_Allowance], 
+    [vw_POHeaderShort].[PO_Buyer_Init] AS [PO_Buyer_Init], 
+    [vw_POHeaderShort].[PO_Buyer_Name] AS [PO_Buyer_Name]
+    FROM [dbo].[vw_POHeaderShort] AS [vw_POHeaderShort]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_UsrDetails_PK_UsrInfo" Association="Self.FK_UsrDetails_PK_UsrInfo">
+      <End Role="tblUsrInfo" EntitySet="tblUsrInfo" />
+      <End Role="tblUsrDetails" EntitySet="tblUsrDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

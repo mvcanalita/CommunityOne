@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CommunityOneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblDepartment">
+          <Key>
+            <PropertyRef Name="DepID" />
+          </Key>
+          <Property Name="DepID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepName" Type="varchar(max)" Nullable="false" />
+          <Property Name="DepCode" Type="int" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblUsrDetails">
+          <Key>
+            <PropertyRef Name="UsrDetailsID" />
+          </Key>
+          <Property Name="UsrDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsrInfoID" Type="int" Nullable="false" />
+          <Property Name="UsrFName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UsrLName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UsrMName" Type="varchar" MaxLength="50" />
+          <Property Name="UsrDepartment" Type="int" Nullable="false" />
+          <Property Name="UsrPosition" Type="varchar" MaxLength="50" />
+          <Property Name="UsrEmpCode" Type="varchar" MaxLength="10" />
+          <Property Name="UsrAddress" Type="varchar" MaxLength="100" />
+          <Property Name="UsrSection" Type="varchar" MaxLength="100" />
+          <Property Name="UsrEAdd" Type="varchar" MaxLength="50" />
+          <Property Name="UsrGender" Type="bit" />
+          <Property Name="UsrDateOfBirth" Type="date" />
+          <Property Name="UsrContactNo" Type="varchar" MaxLength="50" />
+          <Property Name="Usrhoobies" Type="varchar(max)" />
+          <Property Name="UsrMotto" Type="varchar(max)" />
+          <Property Name="UsrProfileID" Type="bigint" />
+          <Property Name="UsrNickName" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="tblUsrInfo">
+          <Key>
+            <PropertyRef Name="UsrInfoID" />
+          </Key>
+          <Property Name="UsrInfoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsrName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UsrPass" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UsrIsLog" Type="bit" Nullable="false" />
+          <Property Name="UsrStatus" Type="bit" Nullable="false" />
+          <Property Name="UsrLastLog" Type="date" />
+          <Property Name="UsrLoginAttempt" Type="tinyint" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UsrGroupID" Type="int" />
+          <Property Name="UsrModuleAccess" Type="varchar(max)" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="photoLocation" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CommunityOne.dbo.vw_POHeaderShort' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_POHeaderShort">
+          <Key>
+            <PropertyRef Name="PO_No" />
+            <PropertyRef Name="PO_Stat" />
+            <PropertyRef Name="PO_Status_Des" />
+            <PropertyRef Name="PO_Vendor_No" />
+            <PropertyRef Name="PO_Cost" />
+            <PropertyRef Name="PO_SKU_Level_Allowance" />
+            <PropertyRef Name="PO_Vendor_Level_Allowance" />
+            <PropertyRef Name="PO_Buyer_Init" />
+          </Key>
+          <Property Name="PO_No" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PO_Stat" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="PO_Status_Des" Type="varchar" MaxLength="29" Nullable="false" />
+          <Property Name="PO_Vendor_No" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="PO_Vendor_Name" Type="varchar" MaxLength="35" />
+          <Property Name="PO_Entry_Date" Type="varchar" MaxLength="10" />
+          <Property Name="PO_Cost" Type="decimal" Precision="17" Scale="4" Nullable="false" />
+          <Property Name="PO_SKU_Level_Allowance" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="PO_Vendor_Level_Allowance" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="PO_Buyer_Init" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="PO_Buyer_Name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_UsrDetails_PK_UsrInfo">
+          <End Role="tblUsrInfo" Type="Self.tblUsrInfo" Multiplicity="1" />
+          <End Role="tblUsrDetails" Type="Self.tblUsrDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsrInfo">
+              <PropertyRef Name="UsrInfoID" />
+            </Principal>
+            <Dependent Role="tblUsrDetails">
+              <PropertyRef Name="UsrInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="proc_getUserLoginCredentials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uname" Type="varchar" Mode="In" />
+          <Parameter Name="upass" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CommunityOneModelStoreContainer">
+          <EntitySet Name="tblDepartment" EntityType="Self.tblDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsrDetails" EntityType="Self.tblUsrDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsrInfo" EntityType="Self.tblUsrInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_POHeaderShort" EntityType="Self.vw_POHeaderShort" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_POHeaderShort].[PO_No] AS [PO_No], 
+    [vw_POHeaderShort].[PO_Stat] AS [PO_Stat], 
+    [vw_POHeaderShort].[PO_Status_Des] AS [PO_Status_Des], 
+    [vw_POHeaderShort].[PO_Vendor_No] AS [PO_Vendor_No], 
+    [vw_POHeaderShort].[PO_Vendor_Name] AS [PO_Vendor_Name], 
+    [vw_POHeaderShort].[PO_Entry_Date] AS [PO_Entry_Date], 
+    [vw_POHeaderShort].[PO_Cost] AS [PO_Cost], 
+    [vw_POHeaderShort].[PO_SKU_Level_Allowance] AS [PO_SKU_Level_Allowance], 
+    [vw_POHeaderShort].[PO_Vendor_Level_Allowance] AS [PO_Vendor_Level_Allowance], 
+    [vw_POHeaderShort].[PO_Buyer_Init] AS [PO_Buyer_Init], 
+    [vw_POHeaderShort].[PO_Buyer_Name] AS [PO_Buyer_Name]
+    FROM [dbo].[vw_POHeaderShort] AS [vw_POHeaderShort]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_UsrDetails_PK_UsrInfo" Association="Self.FK_UsrDetails_PK_UsrInfo">
+            <End Role="tblUsrInfo" EntitySet="tblUsrInfo" />
+            <End Role="tblUsrDetails" EntitySet="tblUsrDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CommunityOneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblDepartment">
+          <Key>
+            <PropertyRef Name="DepID" />
+          </Key>
+          <Property Name="DepID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DepCode" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tblUsrDetail">
+          <Key>
+            <PropertyRef Name="UsrDetailsID" />
+          </Key>
+          <Property Name="UsrDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsrInfoID" Type="Int32" Nullable="false" />
+          <Property Name="UsrFName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsrLName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsrMName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UsrDepartment" Type="Int32" Nullable="false" />
+          <Property Name="UsrPosition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UsrEmpCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UsrAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UsrSection" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UsrEAdd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UsrGender" Type="Boolean" />
+          <Property Name="UsrDateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="UsrContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Usrhoobies" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UsrMotto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UsrProfileID" Type="Int64" />
+          <Property Name="UsrNickName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblUsrInfo" Relationship="Self.FK_UsrDetails_PK_UsrInfo" FromRole="tblUsrDetails" ToRole="tblUsrInfo" />
+        </EntityType>
+        <EntityType Name="tblUsrInfo">
+          <Key>
+            <PropertyRef Name="UsrInfoID" />
+          </Key>
+          <Property Name="UsrInfoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsrName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsrPass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsrIsLog" Type="Boolean" Nullable="false" />
+          <Property Name="UsrStatus" Type="Boolean" Nullable="false" />
+          <Property Name="UsrLastLog" Type="DateTime" Precision="0" />
+          <Property Name="UsrLoginAttempt" Type="Byte" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UsrGroupID" Type="Int32" />
+          <Property Name="UsrModuleAccess" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="photoLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblUsrDetails" Relationship="Self.FK_UsrDetails_PK_UsrInfo" FromRole="tblUsrInfo" ToRole="tblUsrDetails" />
+        </EntityType>
+        <Association Name="FK_UsrDetails_PK_UsrInfo">
+          <End Role="tblUsrInfo" Type="Self.tblUsrInfo" Multiplicity="1" />
+          <End Role="tblUsrDetails" Type="Self.tblUsrDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsrInfo">
+              <PropertyRef Name="UsrInfoID" />
+            </Principal>
+            <Dependent Role="tblUsrDetails">
+              <PropertyRef Name="UsrInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CommunityOneEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblDepartments" EntityType="Self.tblDepartment" />
+          <EntitySet Name="tblUsrDetails" EntityType="Self.tblUsrDetail" />
+          <EntitySet Name="tblUsrInfoes" EntityType="Self.tblUsrInfo" />
+          <AssociationSet Name="FK_UsrDetails_PK_UsrInfo" Association="Self.FK_UsrDetails_PK_UsrInfo">
+            <End Role="tblUsrInfo" EntitySet="tblUsrInfoes" />
+            <End Role="tblUsrDetails" EntitySet="tblUsrDetails" />
+          </AssociationSet>
+          <FunctionImport Name="proc_getUserLoginCredentials" ReturnType="Collection(CommunityOneModel.proc_getUserLoginCredentials_Result)">
+            <Parameter Name="uname" Mode="In" Type="String" />
+            <Parameter Name="upass" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="vw_POHeaderShort" EntityType="CommunityOneModel.vw_POHeaderShort" />
+        </EntityContainer>
+        <ComplexType Name="proc_getUserLoginCredentials_Result">
+          <Property Type="String" Name="UsrName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="UsrPass" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="UsrIsLog" Nullable="false" />
+          <Property Type="Boolean" Name="UsrStatus" Nullable="false" />
+          <Property Type="Int32" Name="UsrGroupId" Nullable="true" />
+          <Property Type="Boolean" Name="isActive" Nullable="true" />
+          <Property Type="String" Name="UsrFName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UsrLName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UsrMName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UsrEmpCode" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="UsrAddress" Nullable="true" MaxLength="100" />
+          <Property Type="Int64" Name="UsrProfileId" Nullable="true" />
+          <Property Type="String" Name="photoLocation" Nullable="true" />
+          <Property Type="Guid" Name="RndID" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="vw_POHeaderShort">
+          <Key>
+            <PropertyRef Name="PO_No" />
+            <PropertyRef Name="PO_Stat" />
+            <PropertyRef Name="PO_Status_Des" />
+            <PropertyRef Name="PO_Vendor_No" />
+            <PropertyRef Name="PO_Cost" />
+            <PropertyRef Name="PO_SKU_Level_Allowance" />
+            <PropertyRef Name="PO_Vendor_Level_Allowance" />
+            <PropertyRef Name="PO_Buyer_Init" />
+          </Key>
+          <Property Name="PO_No" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="PO_Stat" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PO_Status_Des" Type="String" Nullable="false" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="PO_Vendor_No" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="PO_Vendor_Name" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="PO_Entry_Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PO_Cost" Type="Decimal" Nullable="false" Precision="17" Scale="4" />
+          <Property Name="PO_SKU_Level_Allowance" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="PO_Vendor_Level_Allowance" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="PO_Buyer_Init" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="PO_Buyer_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CommunityOneModelStoreContainer" CdmEntityContainer="CommunityOneEntities">
+          <EntitySetMapping Name="tblDepartments">
+            <EntityTypeMapping TypeName="CommunityOneModel.tblDepartment">
+              <MappingFragment StoreEntitySet="tblDepartment">
+                <ScalarProperty Name="DepID" ColumnName="DepID" />
+                <ScalarProperty Name="DepName" ColumnName="DepName" />
+                <ScalarProperty Name="DepCode" ColumnName="DepCode" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsrDetails">
+            <EntityTypeMapping TypeName="CommunityOneModel.tblUsrDetail">
+              <MappingFragment StoreEntitySet="tblUsrDetails">
+                <ScalarProperty Name="UsrDetailsID" ColumnName="UsrDetailsID" />
+                <ScalarProperty Name="UsrInfoID" ColumnName="UsrInfoID" />
+                <ScalarProperty Name="UsrFName" ColumnName="UsrFName" />
+                <ScalarProperty Name="UsrLName" ColumnName="UsrLName" />
+                <ScalarProperty Name="UsrMName" ColumnName="UsrMName" />
+                <ScalarProperty Name="UsrDepartment" ColumnName="UsrDepartment" />
+                <ScalarProperty Name="UsrPosition" ColumnName="UsrPosition" />
+                <ScalarProperty Name="UsrEmpCode" ColumnName="UsrEmpCode" />
+                <ScalarProperty Name="UsrAddress" ColumnName="UsrAddress" />
+                <ScalarProperty Name="UsrSection" ColumnName="UsrSection" />
+                <ScalarProperty Name="UsrEAdd" ColumnName="UsrEAdd" />
+                <ScalarProperty Name="UsrGender" ColumnName="UsrGender" />
+                <ScalarProperty Name="UsrDateOfBirth" ColumnName="UsrDateOfBirth" />
+                <ScalarProperty Name="UsrContactNo" ColumnName="UsrContactNo" />
+                <ScalarProperty Name="Usrhoobies" ColumnName="Usrhoobies" />
+                <ScalarProperty Name="UsrMotto" ColumnName="UsrMotto" />
+                <ScalarProperty Name="UsrProfileID" ColumnName="UsrProfileID" />
+                <ScalarProperty Name="UsrNickName" ColumnName="UsrNickName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsrInfoes">
+            <EntityTypeMapping TypeName="CommunityOneModel.tblUsrInfo">
+              <MappingFragment StoreEntitySet="tblUsrInfo">
+                <ScalarProperty Name="UsrInfoID" ColumnName="UsrInfoID" />
+                <ScalarProperty Name="UsrName" ColumnName="UsrName" />
+                <ScalarProperty Name="UsrPass" ColumnName="UsrPass" />
+                <ScalarProperty Name="UsrIsLog" ColumnName="UsrIsLog" />
+                <ScalarProperty Name="UsrStatus" ColumnName="UsrStatus" />
+                <ScalarProperty Name="UsrLastLog" ColumnName="UsrLastLog" />
+                <ScalarProperty Name="UsrLoginAttempt" ColumnName="UsrLoginAttempt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UsrGroupID" ColumnName="UsrGroupID" />
+                <ScalarProperty Name="UsrModuleAccess" ColumnName="UsrModuleAccess" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="photoLocation" ColumnName="photoLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="proc_getUserLoginCredentials" FunctionName="CommunityOneModel.Store.proc_getUserLoginCredentials">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CommunityOneModel.proc_getUserLoginCredentials_Result">
+                <ScalarProperty Name="UsrName" ColumnName="UsrName" />
+                <ScalarProperty Name="UsrPass" ColumnName="UsrPass" />
+                <ScalarProperty Name="UsrIsLog" ColumnName="UsrIsLog" />
+                <ScalarProperty Name="UsrStatus" ColumnName="UsrStatus" />
+                <ScalarProperty Name="UsrGroupId" ColumnName="UsrGroupId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="UsrFName" ColumnName="UsrFName" />
+                <ScalarProperty Name="UsrLName" ColumnName="UsrLName" />
+                <ScalarProperty Name="UsrMName" ColumnName="UsrMName" />
+                <ScalarProperty Name="UsrEmpCode" ColumnName="UsrEmpCode" />
+                <ScalarProperty Name="UsrAddress" ColumnName="UsrAddress" />
+                <ScalarProperty Name="UsrProfileId" ColumnName="UsrProfileId" />
+                <ScalarProperty Name="photoLocation" ColumnName="photoLocation" />
+                <ScalarProperty Name="RndID" ColumnName="RndID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="vw_POHeaderShort">
+            <EntityTypeMapping TypeName="CommunityOneModel.vw_POHeaderShort">
+              <MappingFragment StoreEntitySet="vw_POHeaderShort">
+                <ScalarProperty Name="PO_Buyer_Name" ColumnName="PO_Buyer_Name" />
+                <ScalarProperty Name="PO_Buyer_Init" ColumnName="PO_Buyer_Init" />
+                <ScalarProperty Name="PO_Vendor_Level_Allowance" ColumnName="PO_Vendor_Level_Allowance" />
+                <ScalarProperty Name="PO_SKU_Level_Allowance" ColumnName="PO_SKU_Level_Allowance" />
+                <ScalarProperty Name="PO_Cost" ColumnName="PO_Cost" />
+                <ScalarProperty Name="PO_Entry_Date" ColumnName="PO_Entry_Date" />
+                <ScalarProperty Name="PO_Vendor_Name" ColumnName="PO_Vendor_Name" />
+                <ScalarProperty Name="PO_Vendor_No" ColumnName="PO_Vendor_No" />
+                <ScalarProperty Name="PO_Status_Des" ColumnName="PO_Status_Des" />
+                <ScalarProperty Name="PO_Stat" ColumnName="PO_Stat" />
+                <ScalarProperty Name="PO_No" ColumnName="PO_No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

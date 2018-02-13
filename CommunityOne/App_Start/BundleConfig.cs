@@ -1,0 +1,56 @@
+﻿using System.Web.Optimization;
+using WebHelpers.Mvc5;
+
+namespace CommunityOne.App_Start
+{
+    public class BundleConfig
+    {
+        public static void RegisterBundles(BundleCollection bundles)
+        {
+            bundles.Add(new StyleBundle("~/Bundles/css")
+                .Include("~/Content/css/bootstrap.min.css", new CssRewriteUrlTransformAbsolute())
+                .Include("~/Content/css/select2.min.css")
+                .Include("~/Content/css/bootstrap-datepicker3.min.css")
+                .Include("~/Content/css/font-awesome.min.css", new CssRewriteUrlTransformAbsolute())
+                .Include("~/Content/css/icheck/blue.min.css", new CssRewriteUrlTransformAbsolute())
+                .Include("~/Content/css/AdminLTE.css", new CssRewriteUrlTransformAbsolute())
+                .Include("~/Content/css/layout-index.css", new CssRewriteUrlTransformAbsolute())
+                .Include("~/Content/DataTables/css/jquery.dataTables.css", new CssRewriteUrlTransformAbsolute())
+                .Include("~/Content/css/skins/skin-blue.css"));
+
+            bundles.Add(new ScriptBundle("~/Bundles/js")
+                .Include("~/Content/js/plugins/jquery/jquery-2.2.4.js")
+                .Include("~/Content/js/plugins/bootstrap/bootstrap.js")
+                .Include("~/Content/js/plugins/fastclick/fastclick.js")
+                .Include("~/Content/js/plugins/slimscroll/jquery.slimscroll.js")
+                .Include("~/Content/js/plugins/select2/select2.full.js")
+                .Include("~/Content/js/plugins/moment/moment.js")
+                .Include("~/Content/js/plugins/datepicker/bootstrap-datepicker.js")
+                .Include("~/Content/js/plugins/icheck/icheck.js")
+                .Include("~/Content/js/plugins/validator.js")
+                .Include("~/Content/js/plugins/inputmask/jquery.inputmask.bundle.js")
+                .Include("~/Content/js/adminlte.js")
+                .Include("~/scripts/DataTables/jquery.dataTables.js")
+                .Include("~/Content/js/init.js"));
+
+            bundles.Add(new StyleBundle("~/Bundles/login/css")
+                .Include("~/Content/toastr.min.css", new CssRewriteUrlTransformAbsolute())
+                .Include("~/Content/css/bootstrap.min.css", new CssRewriteUrlTransformAbsolute())
+                .Include("~/Content/css/font-awesome.min.css", new CssRewriteUrlTransformAbsolute())
+                .Include("~/Content/css/login-layout.css", new CssRewriteUrlTransformAbsolute()));
+
+            bundles.Add(new ScriptBundle("~/Bundles/login/js")
+                .Include("~/Content/js/plugins/jquery/jquery-2.2.4.js")
+                .Include("~/scripts/toastr.js")
+                .Include("~/Content/js/plugins/bootstrap/bootstrap.js")
+                .Include("~/Content/js/plugins/fastclick/fastclick.js")
+                .Include("~/Content/js/plugins/slimscroll/jquery.slimscroll.js"));
+            BundleTable.EnableOptimizations = true;
+            //#if DEBUG
+            //            BundleTable.EnableOptimizations = false;
+            //#else
+            //            BundleTable.EnableOptimizations = true;
+            //#endif
+        }
+    }
+}
