@@ -1,0 +1,68 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<MVCanalita>
+-- Create date: <02172018>
+-- Description:	<Get Latest 100 PO from JDA>
+-- =============================================
+-- EXEC proc_loadTopNthPOHeader 'CLA','100'
+ALTER PROCEDURE proc_loadTopNthPOHeader(
+	@buyrnam nvarchar(3),
+	@n nvarchar(3)
+) 
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @OPENQUERY nvarchar(MAX),
+			@TSQL nvarchar(MAX), 
+			@LinkedServer nvarchar(4000)
+
+	SET @LinkedServer = 'IBML'
+	SET @OPENQUERY = '
+					SELECT
+					PONUMB as PO_No,
+					POSTAT as PO_Stat,
+					(CASE 
+						WHEN POSTAT = ''R'' THEN ''P.O. Selected to be Released''
+						WHEN POSTAT = '''' THEN ''Arthur Pre-D Re-Allocation Pe''
+						WHEN POSTAT = ''X'' THEN ''CANCELLED RECEIVING AUTHORIZA''
+						WHEN POSTAT = ''Y'' THEN ''Purge PO''
+						WHEN POSTAT = ''1'' THEN ''WORK''
+						WHEN POSTAT = ''2'' THEN ''OPEN''
+						WHEN POSTAT = ''3'' THEN ''RELEASED''
+						WHEN POSTAT = ''4'' THEN ''Distroed''
+						WHEN POSTAT = ''5'' THEN ''DOCK CHECK IN COMPLETED''
+						WHEN POSTAT = ''6'' THEN ''RECEIVED''
+						WHEN POSTAT = ''7'' THEN ''Single Step Receiving''
+						WHEN POSTAT = ''8'' THEN ''Cancel''
+						ELSE ''NA''
+					END) as PO_Status_Des,
+					POVNUM as PO_Vendor_No,
+					ASNAME as PO_Vendor_Name,
+					dbo.fn_resolveDateFormat(POEDAT) as PO_Entry_Date,
+					POCOST as PO_Cost,
+					POMALS as PO_SKU_Level_Allowance,
+					POMALV as PO_Vendor_Level_Allowance,
+					POBUYR as PO_Buyer_Init,
+					BYRNAM as PO_Buyer_Name
+				FROM OPENQUERY(' + @LinkedServer + ',''
+					SELECT 
+						PONUMB,POSTAT,POVNUM,POEDAT,POCOST,POMALS,
+						ASNAME,POMALV,BYRNAM,POBUYR
+					FROM POMHDR H
+					LEFT JOIN APSUPP A on H.POVNUM=A.ASNUM
+					LEFT JOIN TBLBYR B on H.POBUYR=B.BYRNUM
+					WHERE H.POBUYR = ''''' + @buyrnam + '''''
+					ORDER BY PONUMB DESC
+					FETCH FIRST ' + @n + ' ROWS ONLY
+				'')
+					'
+	EXEC (@OPENQUERY)
+
+END
+GO
