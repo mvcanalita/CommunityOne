@@ -31,6 +31,8 @@ namespace CommunityOne.Models
         public virtual DbSet<tblUsrDetail> tblUsrDetails { get; set; }
         public virtual DbSet<tblUsrInfo> tblUsrInfoes { get; set; }
         public virtual DbSet<vw_POHeaderShort> vw_POHeaderShort { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<tblMenu> tblMenus { get; set; }
     
         public virtual ObjectResult<proc_getUserLoginCredentials_Result> proc_getUserLoginCredentials(string uname, string upass)
         {

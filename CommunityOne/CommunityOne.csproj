@@ -460,6 +460,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\UserMenu\FetchUserMenu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -471,6 +472,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\UserMenuController.cs" />
     <Compile Include="Models\CommunityOneDbContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -491,7 +493,13 @@
     <Compile Include="Models\proc_getUserLoginCredentials_Result.cs">
       <DependentUpon>CommunityOneDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>CommunityOneDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblDepartment.cs">
+      <DependentUpon>CommunityOneDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblMenu.cs">
       <DependentUpon>CommunityOneDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblUsrDetail.cs">
@@ -500,6 +508,7 @@
     <Compile Include="Models\tblUsrInfo.cs">
       <DependentUpon>CommunityOneDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserMenu.cs" />
     <Compile Include="Models\vw_POHeaderShort.cs">
       <DependentUpon>CommunityOneDbContext.tt</DependentUpon>
     </Compile>

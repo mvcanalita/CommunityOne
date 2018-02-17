@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="CommunityOneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="tblDepartment">
     <Key>
       <PropertyRef Name="DepID" />
@@ -12,6 +22,16 @@
     <Property Name="CreatedDate" Type="date" Nullable="false" />
     <Property Name="UpdatedBy" Type="int" />
     <Property Name="UpdatedDate" Type="date" />
+  </EntityType>
+  <EntityType Name="tblMenu">
+    <Key>
+      <PropertyRef Name="menuId" />
+    </Key>
+    <Property Name="menuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="menuTitle" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="menuParentId" Type="int" />
+    <Property Name="menuLink" Type="varchar" MaxLength="100" />
+    <Property Name="isActive" Type="bit" />
   </EntityType>
   <EntityType Name="tblUsrDetails">
     <Key>
@@ -81,6 +101,18 @@ warning 6002: The table/view 'CommunityOne.dbo.vw_POHeaderShort' does not have a
     <Property Name="PO_Buyer_Init" Type="varchar" MaxLength="3" Nullable="false" />
     <Property Name="PO_Buyer_Name" Type="varchar" MaxLength="20" />
   </EntityType>
+  <Association Name="FK_tblMenu_tblMenu">
+    <End Role="tblMenu" Type="Self.tblMenu" Multiplicity="0..1" />
+    <End Role="tblMenu1" Type="Self.tblMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblMenu">
+        <PropertyRef Name="menuId" />
+      </Principal>
+      <Dependent Role="tblMenu1">
+        <PropertyRef Name="menuParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UsrDetails_PK_UsrInfo">
     <End Role="tblUsrInfo" Type="Self.tblUsrInfo" Multiplicity="1" />
     <End Role="tblUsrDetails" Type="Self.tblUsrDetails" Multiplicity="*" />
@@ -102,7 +134,9 @@ warning 6002: The table/view 'CommunityOne.dbo.vw_POHeaderShort' does not have a
     <Parameter Name="n" Type="nvarchar" Mode="In" />
   </Function>
   <EntityContainer Name="CommunityOneModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblDepartment" EntityType="Self.tblDepartment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblUsrDetails" EntityType="Self.tblUsrDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblUsrInfo" EntityType="Self.tblUsrInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="vw_POHeaderShort" EntityType="Self.vw_POHeaderShort" store:Type="Views" store:Schema="dbo">
@@ -120,6 +154,10 @@ warning 6002: The table/view 'CommunityOne.dbo.vw_POHeaderShort' does not have a
     [vw_POHeaderShort].[PO_Buyer_Name] AS [PO_Buyer_Name]
     FROM [dbo].[vw_POHeaderShort] AS [vw_POHeaderShort]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="FK_tblMenu_tblMenu" Association="Self.FK_tblMenu_tblMenu">
+      <End Role="tblMenu" EntitySet="tblMenu" />
+      <End Role="tblMenu1" EntitySet="tblMenu" />
+    </AssociationSet>
     <AssociationSet Name="FK_UsrDetails_PK_UsrInfo" Association="Self.FK_UsrDetails_PK_UsrInfo">
       <End Role="tblUsrInfo" EntitySet="tblUsrInfo" />
       <End Role="tblUsrDetails" EntitySet="tblUsrDetails" />

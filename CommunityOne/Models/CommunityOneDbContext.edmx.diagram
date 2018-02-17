@@ -10,6 +10,18 @@
         <EntityTypeShape EntityType="CommunityOneModel.tblUsrInfo" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="CommunityOneModel.FK_UsrDetails_PK_UsrInfo" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CommunityOneModel.vw_POHeaderShort" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="CommunityOneModel.sysdiagram" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="CommunityOneModel.tblMenu" Width="1.5" PointX="0.75" PointY="6.75" />
+        <AssociationConnector Association="CommunityOneModel.FK_tblMenu_tblMenu" ManuallyRouted="true" >
+          <ConnectorPoint PointX="1.2819230769230767" PointY="9.1148893229166674" />
+          <ConnectorPoint PointX="1.2819230769230767" PointY="9.197389322916667" />
+          <ConnectorPoint PointX="0.8340064102564102" PointY="9.197389322916667" />
+          <ConnectorPoint PointX="0.8340064102564102" PointY="9.6435351562500014" />
+          <ConnectorPoint PointX="2.1347115384615383" PointY="9.6435351562500014" />
+          <ConnectorPoint PointX="2.1347115384615383" PointY="9.2893424479166669" />
+          <ConnectorPoint PointX="1.7284615384615383" PointY="9.2893424479166669" />
+          <ConnectorPoint PointX="1.7284615384615383" PointY="9.1148893229166674" />
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

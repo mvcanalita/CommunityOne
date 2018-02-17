@@ -1,4 +1,5 @@
 ﻿@using WebHelpers.Mvc5
+@model IEnumerable<CommunityOne.Models.UserMenu>
 <aside class="main-sidebar">
     <section class="sidebar">
         @* BEGIN Search *@
@@ -36,5 +37,19 @@
             </li>
         </ul>
         @* END Menu *@
+        <ul id="menu">
+            @foreach (var i in Model)
+            {
+
+                <li>@i.menuTitle</li>
+                if (@i.menmenu.Count > 0)
+                {
+                    foreach (var ii in i.menmenu)
+                    {
+                        <li>@ii.menuTitle</li>
+                    }
+                }
+            }
+        </ul>
     </section>
 </aside>

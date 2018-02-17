@@ -91,6 +91,12 @@
       <Parameter Name="buyrnam" Mode="In" Type="String" />
       <Parameter Name="n" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="sysdiagrams" EntityType="CommunityOneModel.sysdiagram" />
+    <EntitySet Name="tblMenus" EntityType="CommunityOneModel.tblMenu" />
+    <AssociationSet Name="FK_tblMenu_tblMenu" Association="CommunityOneModel.FK_tblMenu_tblMenu">
+      <End Role="tblMenu" EntitySet="tblMenus" />
+      <End Role="tblMenu1" EntitySet="tblMenus" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="proc_getUserLoginCredentials_Result">
     <Property Type="String" Name="UsrName" Nullable="false" MaxLength="50" />
@@ -131,4 +137,38 @@
     <Property Name="PO_Buyer_Init" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
     <Property Name="PO_Buyer_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblMenu">
+    <Key>
+      <PropertyRef Name="menuId" />
+    </Key>
+    <Property Name="menuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="menuTitle" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="menuParentId" Type="Int32" />
+    <Property Name="menuLink" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblMenu1" Relationship="CommunityOneModel.FK_tblMenu_tblMenu" FromRole="tblMenu" ToRole="tblMenu1" />
+    <NavigationProperty Name="tblMenu2" Relationship="CommunityOneModel.FK_tblMenu_tblMenu" FromRole="tblMenu1" ToRole="tblMenu" />
+  </EntityType>
+  <Association Name="FK_tblMenu_tblMenu">
+    <End Type="CommunityOneModel.tblMenu" Role="tblMenu" Multiplicity="0..1" />
+    <End Type="CommunityOneModel.tblMenu" Role="tblMenu1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblMenu">
+        <PropertyRef Name="menuId" />
+      </Principal>
+      <Dependent Role="tblMenu1">
+        <PropertyRef Name="menuParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
