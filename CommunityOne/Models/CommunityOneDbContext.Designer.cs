@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\MIS\Desktop\CommunityOne\CommunityOne\Models\CommunityOneDbContext.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\devEnv\Ongoing\mvc\CommunityOne\CommunityOne\Models\CommunityOneDbContext.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

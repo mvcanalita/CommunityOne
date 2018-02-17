@@ -102,6 +102,10 @@ warning 6002: The table/view 'CommunityOne.dbo.vw_POHeaderShort' does not have a
           <Parameter Name="uname" Type="varchar" Mode="In" />
           <Parameter Name="upass" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="proc_loadTopNthPOHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="buyrnam" Type="nvarchar" Mode="In" />
+          <Parameter Name="n" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="CommunityOneModelStoreContainer">
           <EntitySet Name="tblDepartment" EntityType="Self.tblDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsrDetails" EntityType="Self.tblUsrDetails" Schema="dbo" store:Type="Tables" />
@@ -213,6 +217,14 @@ warning 6002: The table/view 'CommunityOne.dbo.vw_POHeaderShort' does not have a
             <Parameter Name="upass" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="vw_POHeaderShort" EntityType="CommunityOneModel.vw_POHeaderShort" />
+          <FunctionImport Name="proc_loadTopNthPOHeader">
+            <Parameter Name="buyrnam" Mode="In" Type="String" />
+            <Parameter Name="n" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="loadPOHeaderShort" EntitySet="vw_POHeaderShort" ReturnType="Collection(CommunityOneModel.vw_POHeaderShort)">
+            <Parameter Name="buyrnam" Mode="In" Type="String" />
+            <Parameter Name="n" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="proc_getUserLoginCredentials_Result">
           <Property Type="String" Name="UsrName" Nullable="false" MaxLength="50" />
@@ -355,6 +367,8 @@ warning 6002: The table/view 'CommunityOne.dbo.vw_POHeaderShort' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="proc_loadTopNthPOHeader" FunctionName="CommunityOneModel.Store.proc_loadTopNthPOHeader" />
+          <FunctionImportMapping FunctionImportName="loadPOHeaderShort" FunctionName="CommunityOneModel.Store.proc_loadTopNthPOHeader" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

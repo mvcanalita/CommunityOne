@@ -11,25 +11,13 @@ namespace CommunityOne.Controllers
 {
     public class HomeController : Controller
     {
+        CommunityOneEntities db = new CommunityOneEntities();
+
         [NoCache]
         [Authorize]
         public ActionResult Index()
         {
-            CommunityOneEntities db = new CommunityOneEntities();
-
-            IEnumerable<POHDRshrt_ViewModel> polist = db.vw_POHeaderShort.Where(x => x.PO_Buyer_Init == "CLA").Select(x => new POHDRshrt_ViewModel
-            {
-                ponumb = (int)x.PO_No,
-                postat = x.PO_Stat + " - " + x.PO_Status_Des,
-                vendor = x.PO_Vendor_No.ToString() + " - " + x.PO_Vendor_Name,
-                poedat = x.PO_Entry_Date,
-                pocost = x.PO_Cost,
-                pomalw = x.PO_SKU_Level_Allowance,
-                povalw = x.PO_Vendor_Level_Allowance,
-                buyer = x.PO_Buyer_Init + " - " + x.PO_Buyer_Name
-            }).OrderByDescending(x=>x.ponumb).Take(10).ToList();
-
-            return View(polist);
+            return View();
         }
 
         public ActionResult AnotherLink()
@@ -39,19 +27,19 @@ namespace CommunityOne.Controllers
 
         public JsonResult loadPoHeader()
         {
-            CommunityOneEntities db = new CommunityOneEntities();
 
-            List<POHDRshrt_ViewModel> polist = db.vw_POHeaderShort.Where(x => x.PO_Buyer_Init == "CLA").Select(x => new POHDRshrt_ViewModel {
-                ponumb=(int)x.PO_No,
-                postat=x.PO_Stat + " - " + x.PO_Status_Des,
-                vendor=x.PO_Vendor_No.ToString() + " - " + x.PO_Vendor_Name,
-                poedat=x.PO_Entry_Date,
-                pocost=x.PO_Cost,
-                pomalw=x.PO_SKU_Level_Allowance,
-                povalw=x.PO_Vendor_Level_Allowance,
-                buyer=x.PO_Buyer_Init + " - " + x.PO_Buyer_Name
+            List<POHDRshrt_ViewModel> polist = db.loadPOHeaderShort("CLA", "100").Select(x => new POHDRshrt_ViewModel
+            {
+                ponumb = (int)x.PO_No,
+                postat = x.PO_Stat + " - " + x.PO_Status_Des,
+                vendor = x.PO_Vendor_No.ToString() + " - " + x.PO_Vendor_Name,
+                poedat = x.PO_Entry_Date,
+                pocost = x.PO_Cost,
+                pomalw = x.PO_SKU_Level_Allowance,
+                povalw = x.PO_Vendor_Level_Allowance,
+                buyer = x.PO_Buyer_Init + " - " + x.PO_Buyer_Name
             }).ToList();
-            
+
             return Json(polist, JsonRequestBehavior.AllowGet);
         }
     }

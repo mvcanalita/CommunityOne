@@ -97,6 +97,10 @@ warning 6002: The table/view 'CommunityOne.dbo.vw_POHeaderShort' does not have a
     <Parameter Name="uname" Type="varchar" Mode="In" />
     <Parameter Name="upass" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="proc_loadTopNthPOHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="buyrnam" Type="nvarchar" Mode="In" />
+    <Parameter Name="n" Type="nvarchar" Mode="In" />
+  </Function>
   <EntityContainer Name="CommunityOneModelStoreContainer">
     <EntitySet Name="tblDepartment" EntityType="Self.tblDepartment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblUsrDetails" EntityType="Self.tblUsrDetails" Schema="dbo" store:Type="Tables" />

@@ -97,5 +97,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="proc_loadTopNthPOHeader" FunctionName="CommunityOneModel.Store.proc_loadTopNthPOHeader" />
+    <FunctionImportMapping FunctionImportName="loadPOHeaderShort" FunctionName="CommunityOneModel.Store.proc_loadTopNthPOHeader" />
   </EntityContainerMapping>
 </Mapping>

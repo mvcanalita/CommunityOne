@@ -44,5 +44,44 @@ namespace CommunityOne.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<proc_getUserLoginCredentials_Result>("proc_getUserLoginCredentials", unameParameter, upassParameter);
         }
+    
+        public virtual int proc_loadTopNthPOHeader(string buyrnam, string n)
+        {
+            var buyrnamParameter = buyrnam != null ?
+                new ObjectParameter("buyrnam", buyrnam) :
+                new ObjectParameter("buyrnam", typeof(string));
+    
+            var nParameter = n != null ?
+                new ObjectParameter("n", n) :
+                new ObjectParameter("n", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("proc_loadTopNthPOHeader", buyrnamParameter, nParameter);
+        }
+    
+        public virtual ObjectResult<vw_POHeaderShort> loadPOHeaderShort(string buyrnam, string n)
+        {
+            var buyrnamParameter = buyrnam != null ?
+                new ObjectParameter("buyrnam", buyrnam) :
+                new ObjectParameter("buyrnam", typeof(string));
+    
+            var nParameter = n != null ?
+                new ObjectParameter("n", n) :
+                new ObjectParameter("n", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vw_POHeaderShort>("loadPOHeaderShort", buyrnamParameter, nParameter);
+        }
+    
+        public virtual ObjectResult<vw_POHeaderShort> loadPOHeaderShort(string buyrnam, string n, MergeOption mergeOption)
+        {
+            var buyrnamParameter = buyrnam != null ?
+                new ObjectParameter("buyrnam", buyrnam) :
+                new ObjectParameter("buyrnam", typeof(string));
+    
+            var nParameter = n != null ?
+                new ObjectParameter("n", n) :
+                new ObjectParameter("n", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vw_POHeaderShort>("loadPOHeaderShort", mergeOption, buyrnamParameter, nParameter);
+        }
     }
 }

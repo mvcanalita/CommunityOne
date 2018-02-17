@@ -83,6 +83,14 @@
       <Parameter Name="upass" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="vw_POHeaderShort" EntityType="CommunityOneModel.vw_POHeaderShort" />
+    <FunctionImport Name="proc_loadTopNthPOHeader">
+      <Parameter Name="buyrnam" Mode="In" Type="String" />
+      <Parameter Name="n" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="loadPOHeaderShort" EntitySet="vw_POHeaderShort" ReturnType="Collection(CommunityOneModel.vw_POHeaderShort)">
+      <Parameter Name="buyrnam" Mode="In" Type="String" />
+      <Parameter Name="n" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="proc_getUserLoginCredentials_Result">
     <Property Type="String" Name="UsrName" Nullable="false" MaxLength="50" />
