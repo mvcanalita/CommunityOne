@@ -1,0 +1,22 @@
+﻿@using CommunityOne.Models
+@model IEnumerable<UserMenu>
+@{ 
+    Layout = null;
+}
+<div>
+    <ul id="menu">
+        @foreach(var i in Model)
+        {
+            
+            <li>@i.menuTitle</li>
+            if(@i.menmenu.Count > 0)
+            {
+                foreach(var ii in i.menmenu)
+                {
+                    <li>@ii.menuTitle</li>
+                }
+            }
+        }
+
+    </ul>
+</div>
