@@ -19,36 +19,7 @@ namespace CommunityOne.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            List<UserMenu> menuList = new List<UserMenu>();
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CommunityOneDbContext"].ToString()))
-            {
-                con.Open();
-
-                string query = "Select * from tblMenu where isActive=1";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    using (SqlDataReader rdr = cmd.ExecuteReader())
-                    {
-                        while (rdr.Read())
-                        {
-                            UserMenu m = new UserMenu()
-                            {
-                                menuId = Convert.ToInt32(rdr["menuId"]),
-                                menuTitle = rdr["menuTitle"].ToString(),
-                                menuLink = rdr["menuLink"].ToString(),
-                                menuParentId = rdr["menuParentId"] != DBNull.Value ? Convert.ToInt32(rdr["menuParentId"]) : (int?)null,
-                                isActive = Convert.ToBoolean(rdr["isActive"])
-                            };
-                            menuList.Add(m);
-                        }
-                    }
-
-                }
-
-
-            }
-            IEnumerable<UserMenu> menuTree = getMenuTree(menuList, null);
-            return View(menuList);
+            return View();
         }
 
         public ActionResult AnotherLink()
@@ -72,20 +43,6 @@ namespace CommunityOne.Controllers
             }).ToList();
 
             return Json(polist, JsonRequestBehavior.AllowGet);
-        }
-
-
-        private IEnumerable<UserMenu> getMenuTree(List<UserMenu> l, int? menuParentId)
-        {
-            return l.Where(x => x.menuParentId == menuParentId).Select(x => new UserMenu()
-            {
-                menuId = x.menuId,
-                menuTitle = x.menuTitle,
-                menuLink = x.menuLink,
-                menuParentId = x.menuParentId,
-                isActive = x.isActive,
-                menmenu = getMenuTree(l, x.menuId)
-            }).ToList();
         }
     }
 }

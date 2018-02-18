@@ -1,22 +1,85 @@
 ﻿@using CommunityOne.Models
+@using WebHelpers.Mvc5
 @model IEnumerable<UserMenu>
 @{ 
     Layout = null;
 }
 <div>
-    <ul id="menu">
-        @foreach(var i in Model)
+    <ul class="sidebar-menu" data-widget="tree">
+        @foreach (var i in Model)
         {
-            
-            <li>@i.menuTitle</li>
-            if(@i.menmenu.Count > 0)
+            if (i.menmenu.Count > 0)
             {
-                foreach(var ii in i.menmenu)
+                if(i.menuTitle.Contains("JDA Reports"))
                 {
-                    <li>@ii.menuTitle</li>
+                    <li class="header">Reports</li>
+                }else if (i.menuTitle.Contains("Community"))
+                {
+                    <li class="header">Social</li>
                 }
-            }
-        }
+                else
+                {
+                    <li class="header">Menu</li>
+                }
+                <li class="treeview">
 
+                    <a href="#"><i class="fa fa-link"></i> <span>@i.menuTitle</span></a>
+
+                    @if (@i.menmenu.Count > 0)
+                    {
+                        <ul class="treeview-menu">
+                            @foreach (var ii in i.menmenu)
+                            {
+                                <li><a href="@Url.Action("Index", "Home")">@ii.menuTitle</a></li>
+                            }
+                        </ul>
+                    }
+
+                </li>
+            }
+            else
+            {
+                if (i.menuTitle.Contains("JDA Reports"))
+                {
+                    <li class="header">Reports</li>
+                }
+                else if (i.menuTitle.Contains("Community"))
+                {
+                    <li class="header">Social</li>
+                }
+                else
+                {
+                    <li class="header">Menu</li>
+                }
+                <li class="">
+
+                    <a href="#"><i class="fa fa-link"></i> <span>@i.menuTitle</span></a>
+
+                    @if (@i.menmenu.Count > 0)
+                    {
+                        <ul class="treeview-menu">
+                            @foreach (var ii in i.menmenu)
+                            {
+                                <li><a href="@Url.Action("Index", "Home")">@ii.menuTitle</a></li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+
+        }
+        @*<li class="header">HEADER</li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-link"></i> <span>Multilevel</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="#">Link in level 2</a></li>
+                <li><a href="#">Link in level 2</a></li>
+            </ul>
+        </li>*@
     </ul>
 </div>

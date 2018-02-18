@@ -22,12 +22,13 @@ namespace CommunityOne.Controllers
             List<UserMenu> menuList = new List<UserMenu>();
             using(SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CommunityOneDbContext"].ToString()))
             {
+                con.Open();
                 string query = "Select * from tblMenu where isActive=1";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     using(SqlDataReader rdr = cmd.ExecuteReader())
                     {
-                        while (rdr.Read())
+                        while (rdr.Read()) 
                         {
                             UserMenu m = new UserMenu()
                             {
